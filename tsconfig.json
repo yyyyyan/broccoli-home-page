@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "module": "es6",
+    "jsx": "react",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    // Ensures that Babel safely transpiles files in TS project
+    "isolatedModules": true,
+    // tsc is only needed for type checking
+    "noEmit": true,
+    "paths": {
+      "@types": [
+        "./src/types"
+      ],
+      "@utils": [
+        "./src/utils"
+      ],
+      "@widgets": [
+        "./src/views/common"
+      ]
+    }
+  }
+}
