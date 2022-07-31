@@ -3,8 +3,10 @@ import styled, { css } from 'styled-components';
 interface Props {
   readonly $vertical?: boolean;
   readonly $reversed?: boolean;
-  readonly $justifyContent?: 'flex-start' | 'flex-end' | 'center';
+  readonly $justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between';
   readonly $alignItems?: 'flex-start' | 'flex-end' | 'center' | 'baseline';
+  readonly $minWidth?: number;
+  readonly $minHeight?: number;
   readonly $paddingX?: number;
   readonly $paddingY?: number;
 }
@@ -30,6 +32,12 @@ const Box = styled.div<Props>`
   flex-direction: ${props => getDirection(props)};
   justify-content: ${props => props.$justifyContent || 'flex-start'};
   align-items: ${props => props.$alignItems || 'baseline'};
+  ${props => typeof props.$minWidth === 'number' ? css`
+    min-width: ${props.$minWidth}em;
+  ` : ''}
+  ${props => typeof props.$minHeight === 'number' ? css`
+    min-height: ${props.$minHeight}em;
+  ` : ''}
   ${props => hasPadding(props) ? css`
     padding-left: ${props.$paddingX || 0}em;
     padding-right: ${props.$paddingX || 0}em;

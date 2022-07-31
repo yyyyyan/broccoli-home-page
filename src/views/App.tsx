@@ -1,31 +1,37 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Box, Text, Title } from '@widgets';
+import React, { useState, useEffect } from 'react';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import Modal from 'react-modal';
+import { darkTheme, lightTheme } from '@utils';
 import Header from './Header';
+import Home from './Home';
 import Footer from './Footer';
 
-const Content = styled(Box)`
-  width: 100%;
-  height: 100%;
-  font-size: 1.2rem;
-  word-spacing: 0.1em;
+export const GlobalStyles = createGlobalStyle`
+  body {
+    background-color: ${props => props.theme.bkg.primary};
+    transition: all 0.50s linear;
+  }
 `;
 
 function Component(): JSX.Element {
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (document.getElementById('root')) {
+      Modal.setAppElement('#root');
+    }
+    Modal.defaultStyles.overlay.backgroundColor = 'rgba(0,0,0,0.3)';
+  }, []);
+
   return (
-    <div>
-      <Header/>
-      <Content $vertical $justifyContent="center" $alignItems="center">
-        <Box $vertical $alignItems="center">
-          <Title>A better way</Title>
-          <Title>to enjoy every day.</Title>
-          <Box $paddingY={0.8}>
-            <Text>Be the first to know when we launch.</Text>
-          </Box>
-        </Box>
-      </Content>
-      <Footer/>
-    </div>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <GlobalStyles/>
+      <div>
+        <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}/>
+        <Home/>
+        <Footer/>
+      </div>
+    </ThemeProvider>
   );
 };
 

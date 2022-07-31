@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Box, Title } from '@widgets';
-import { getColor } from '@utils';
+import { Box, Button, Title } from '@widgets';
 
 const Header = styled(Box)<{ $darkMode?: boolean }>`
   position: fixed;
@@ -9,16 +8,35 @@ const Header = styled(Box)<{ $darkMode?: boolean }>`
   left: 0;
   width: 100%;
   height: 10vh;
-  border-bottom: solid 2px;
-  border-color: ${props => getColor('text', props.$darkMode, 'secondary')};
+  border-bottom: solid 2px ${props => props.theme.text.secondary};
+  padding-left: 2em;
+  padding-right: 1em;
 `;
 
-function Component(): JSX.Element {
+interface Props {
+  isDarkMode: boolean;
+  setIsDarkMode: (isDarkMode: boolean) => void;
+}
+
+function Component(props: Props): JSX.Element {
+  const [canToggle, setCanToggle] = useState<boolean>(true);
+
   return (
-    <Header $alignItems="center" $paddingX={6}>
+    <Header $alignItems="center" $justifyContent="space-between">
       <Title $type="secondary">BROCCOLI & Co.</Title>
+      <Button
+        $type="secondary"
+        $disabled={!canToggle}
+        onClick={() => {
+          setCanToggle(false);
+          props.setIsDarkMode(!props.isDarkMode);
+          // Sets a delay to avoid being toggled too frequently
+          setTimeout(() => setCanToggle(true), 1000);
+        }}>
+        Toggle Theme
+      </Button>
     </Header>
   );
-};
+}
 
 export default Component;

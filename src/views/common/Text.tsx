@@ -1,14 +1,16 @@
 import styled from 'styled-components';
-import { getColor } from '@utils';
 
 interface Props {
-  readonly $darkMode?: boolean;
+  readonly $alert?: boolean;
   readonly $type?: 'primary' | 'secondary';
+  readonly $style?: 'inherit' | 'normal' | 'italic';
 }
 
 const Text = styled.span<Props>`
   font-size: 1em;
-  color: ${props => getColor('text', props.$darkMode, props.$type)};
+  font-style: ${props => props.$style || 'inherit'};
+  color: ${props => props.$alert === true ?
+    props.theme.alert[props.$type || 'primary'] : props.theme.text[props.$type || 'primary']}
 `;
 
 export default Text;
