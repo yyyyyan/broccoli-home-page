@@ -10,10 +10,7 @@ module.exports = {
   },
   devServer: {
     port: 3000,
-    open: true,
-    static: {
-      directory: path.join(__dirname, 'build'),
-    },
+    open: true
   },
   module: {
     rules: [
